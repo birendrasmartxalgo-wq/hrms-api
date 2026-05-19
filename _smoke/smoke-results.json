@@ -1,0 +1,619 @@
+{
+  "target": "http://localhost:6000/api/v1",
+  "ranAt": "2026-05-15T09:48:24.538Z",
+  "durationMs": 71,
+  "totals": {
+    "total": 38,
+    "passed": 0,
+    "failed": 38
+  },
+  "results": [
+    {
+      "group": "Health",
+      "name": "health",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/health",
+      "role": null,
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 35,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Config",
+      "name": "mobile-version",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/config/mobile-version",
+      "role": null,
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Auth",
+      "name": "login (admin)",
+      "method": "POST",
+      "url": "http://localhost:6000/api/v1/auth/login",
+      "role": null,
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Auth",
+      "name": "login (hr)",
+      "method": "POST",
+      "url": "http://localhost:6000/api/v1/auth/login",
+      "role": null,
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Auth",
+      "name": "login (employee)",
+      "method": "POST",
+      "url": "http://localhost:6000/api/v1/auth/login",
+      "role": null,
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Auth",
+      "name": "me (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/auth/me",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Auth",
+      "name": "me (employee)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/auth/me",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Profile",
+      "name": "profile/me (employee)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/profile/me",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Profile",
+      "name": "profile/documents",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/profile/documents",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Attendance",
+      "name": "today",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/attendance/today",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Attendance",
+      "name": "monthly",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/attendance/monthly",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Attendance",
+      "name": "repunch-status",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/attendance/repunch-status",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Attendance",
+      "name": "repunch-requests (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/attendance/repunch-requests",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Attendance",
+      "name": "activity-statuses (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/attendance/activity-statuses",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Employees",
+      "name": "list (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/employees",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Employees",
+      "name": "stats (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/employees/stats",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Employees",
+      "name": "pending-approvals (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/employees/pending-approvals",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 3,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Admin",
+      "name": "dashboard",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/admin/dashboard",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 2,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Admin",
+      "name": "departments",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/admin/departments",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Admin",
+      "name": "office-settings",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/admin/office-settings",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Admin",
+      "name": "attendance-settings",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/admin/attendance-settings",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Admin",
+      "name": "payroll-period-settings",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/admin/payroll-period-settings",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Tasks",
+      "name": "list",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/tasks",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Tasks",
+      "name": "stats",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/tasks/stats",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Tasks",
+      "name": "kanban",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/tasks/kanban",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Chat",
+      "name": "conversations",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/chat",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Chat",
+      "name": "online",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/chat/online",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Chat",
+      "name": "starred",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/chat/starred",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Leaves",
+      "name": "my",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/leaves/my",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Leaves",
+      "name": "balance",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/leaves/balance",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Leaves",
+      "name": "pending (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/leaves/pending",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Leaves",
+      "name": "summary (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/leaves/summary",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 0,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Notifications",
+      "name": "list",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/notifications",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Announcements",
+      "name": "list",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/announcements?limit=5",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Payroll",
+      "name": "my",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/payroll/my",
+      "role": "employee",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Payroll",
+      "name": "list (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/payroll",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Payroll",
+      "name": "export-template (admin)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/payroll/export-template",
+      "role": "admin",
+      "status": 0,
+      "ok": false,
+      "expected": [
+        200,
+        201
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    },
+    {
+      "group": "Auth",
+      "name": "me (no token → 401)",
+      "method": "GET",
+      "url": "http://localhost:6000/api/v1/auth/me",
+      "role": null,
+      "status": 0,
+      "ok": false,
+      "expected": [
+        401
+      ],
+      "ms": 1,
+      "body": null,
+      "error": "Unable to connect. Is the computer able to access the url?"
+    }
+  ]
+}

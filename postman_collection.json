@@ -1,0 +1,235 @@
+{
+  "info": {
+    "name": "SmartXAlgo HRMS API",
+    "_postman_id": "hrms-api-collection",
+    "description": "Generated from apps/api (Elysia). Base prefix is /api/{{apiVersion}} — versioned at the URL level (env.API_VERSION, default 'v1'). All non-public routes require Bearer JWT.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:6000" },
+    { "key": "apiVersion", "value": "v1" },
+    { "key": "accessToken", "value": "" },
+    { "key": "refreshToken", "value": "" },
+    { "key": "empId", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "id", "value": "" },
+    { "key": "conversationId", "value": "" },
+    { "key": "messageId", "value": "" },
+    { "key": "subtaskIndex", "value": "0" },
+    { "key": "qid", "value": "" },
+    { "key": "docId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        { "name": "GET /health", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/health", "host": ["{{baseUrl}}"], "path": ["api", "{{apiVersion}}", "health"] } } }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        { "name": "POST /auth/register", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@smartxalgo.com\",\n  \"password\": \"password123\",\n  \"role\": \"employee\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/auth/register", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","auth","register"] } } },
+        { "name": "POST /auth/login", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"email\": \"admin@smartxalgo.com\",\n  \"password\": \"admin123\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/auth/login", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","auth","login"] } } },
+        { "name": "POST /auth/refresh", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/auth/refresh", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","auth","refresh"] } } },
+        { "name": "POST /auth/forgot-password", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"email\": \"jane@smartxalgo.com\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/auth/forgot-password", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","auth","forgot-password"] } } },
+        { "name": "POST /auth/verify-otp", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"email\": \"jane@smartxalgo.com\",\n  \"otp\": \"123456\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/auth/verify-otp", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","auth","verify-otp"] } } },
+        { "name": "POST /auth/reset-password", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"email\": \"jane@smartxalgo.com\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"newPassword123\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/auth/reset-password", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","auth","reset-password"] } } },
+        { "name": "GET /auth/me", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/auth/me", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","auth","me"] } } }
+      ]
+    },
+    {
+      "name": "Config",
+      "item": [
+        { "name": "GET /config/mobile-version", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/config/mobile-version", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","config","mobile-version"] } } },
+        { "name": "GET /config/office-location", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/config/office-location", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","config","office-location"] } } }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        { "name": "GET /profile/me", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/me", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","me"] } } },
+        { "name": "PUT /profile/me", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"phone\": \"+91-9999999999\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/me", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","me"] } } },
+        { "name": "PUT /profile/change-password", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"currentPassword\": \"oldPass\",\n  \"newPassword\": \"newPass\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/change-password", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","change-password"] } } },
+        { "name": "POST /profile/avatar", "request": { "method": "POST", "body": {"mode":"formdata","formdata":[{"key":"file","type":"file","src":""}]}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/avatar", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","avatar"] } } },
+        { "name": "POST /profile/documents", "request": { "method": "POST", "body": {"mode":"formdata","formdata":[{"key":"file","type":"file","src":""},{"key":"type","value":"aadhar","type":"text"}]}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/documents", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","documents"] } } },
+        { "name": "GET /profile/documents", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/documents", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","documents"] } } },
+        { "name": "POST /profile/push-token", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"token\": \"ExponentPushToken[xxx]\",\n  \"platform\": \"ios\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/push-token", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","push-token"] } } },
+        { "name": "DELETE /profile/push-token", "request": { "method": "DELETE", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"token\": \"ExponentPushToken[xxx]\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/push-token", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","push-token"] } } },
+        { "name": "PUT /profile/admin/change-password/:userId", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"newPassword\": \"resetPass123\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/admin/change-password/{{userId}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","admin","change-password","{{userId}}"] } } },
+        { "name": "GET /profile/:empId", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/profile/{{empId}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","profile","{{empId}}"] } } }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        { "name": "POST /attendance/punch-in", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"lat\": 12.9716,\n  \"lng\": 77.5946,\n  \"selfieKey\": null\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/punch-in", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","punch-in"] } } },
+        { "name": "POST /attendance/punch-out", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"lat\": 12.9716,\n  \"lng\": 77.5946,\n  \"selfieKey\": null\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/punch-out", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","punch-out"] } } },
+        { "name": "POST /attendance/break/start", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"reason\": \"lunch\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/break/start", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","break","start"] } } },
+        { "name": "POST /attendance/break/end", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/break/end", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","break","end"] } } },
+        { "name": "GET /attendance/today", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/today", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","today"] } } },
+        { "name": "GET /attendance/monthly", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/monthly?month=2026-05", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","monthly"], "query":[{"key":"month","value":"2026-05"}] } } },
+        { "name": "GET /attendance/monthly/:empId", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/monthly/{{empId}}?month=2026-05", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","monthly","{{empId}}"], "query":[{"key":"month","value":"2026-05"}] } } },
+        { "name": "PUT /attendance/regularize/:id", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"reason\": \"forgot to punch out\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/regularize/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","regularize","{{id}}"] } } },
+        { "name": "GET /attendance/repunch-requests", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/repunch-requests", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","repunch-requests"] } } },
+        { "name": "GET /attendance/repunch-status", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/repunch-status", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","repunch-status"] } } },
+        { "name": "PATCH /attendance/repunch-requests/:id/approve", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"remarks\": \"approved\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/repunch-requests/{{id}}/approve", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","repunch-requests","{{id}}","approve"] } } },
+        { "name": "PATCH /attendance/repunch-requests/:id/reject", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"remarks\": \"insufficient justification\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/repunch-requests/{{id}}/reject", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","repunch-requests","{{id}}","reject"] } } },
+        { "name": "POST /attendance/activity-status", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"status\": \"active\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/activity-status", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","activity-status"] } } },
+        { "name": "GET /attendance/activity-statuses", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/attendance/activity-statuses", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","attendance","activity-statuses"] } } }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        { "name": "GET /employees/stats", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/stats", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","stats"] } } },
+        { "name": "GET /employees/pending-approvals", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/pending-approvals", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","pending-approvals"] } } },
+        { "name": "GET /employees", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees"] } } },
+        { "name": "GET /employees/:id", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{id}}"] } } },
+        { "name": "POST /employees", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"name\": \"New Hire\",\n  \"email\": \"new.hire@smartxalgo.com\",\n  \"department\": \"Engineering\",\n  \"designation\": \"Engineer\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees"] } } },
+        { "name": "PUT /employees/:id", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"designation\": \"Senior Engineer\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{id}}"] } } },
+        { "name": "DELETE /employees/:id", "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{id}}"] } } },
+        { "name": "POST /employees/:id/force-logout", "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{id}}/force-logout", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{id}}","force-logout"] } } },
+        { "name": "POST /employees/:empId/documents", "request": { "method": "POST", "body": {"mode":"formdata","formdata":[{"key":"file","type":"file","src":""},{"key":"type","value":"pan","type":"text"}]}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{empId}}/documents", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{empId}}","documents"] } } },
+        { "name": "GET /employees/:empId/documents", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{empId}}/documents", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{empId}}","documents"] } } },
+        { "name": "GET /employees/:empId/document-details", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{empId}}/document-details", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{empId}}","document-details"] } } },
+        { "name": "DELETE /employees/documents/:docId", "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/documents/{{docId}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","documents","{{docId}}"] } } },
+        { "name": "PUT /employees/:empId/approve", "request": { "method": "PUT", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{empId}}/approve", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{empId}}","approve"] } } },
+        { "name": "PUT /employees/:empId/reject", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"reason\": \"missing documents\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/employees/{{empId}}/reject", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","employees","{{empId}}","reject"] } } }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        { "name": "GET /admin/dashboard", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/dashboard", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","dashboard"] } } },
+        { "name": "GET /admin/activity", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/activity", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","activity"] } } },
+        { "name": "GET /admin/departments", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/departments", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","departments"] } } },
+        { "name": "GET /admin/doc-deadline-warnings", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/doc-deadline-warnings", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","doc-deadline-warnings"] } } },
+        { "name": "GET /admin/office-settings", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/office-settings", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","office-settings"] } } },
+        { "name": "PUT /admin/office-settings", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"lat\": 12.9716,\n  \"lng\": 77.5946,\n  \"radiusM\": 200\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/office-settings", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","office-settings"] } } },
+        { "name": "GET /admin/attendance-settings", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/attendance-settings", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","attendance-settings"] } } },
+        { "name": "PUT /admin/attendance-settings", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/attendance-settings", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","attendance-settings"] } } },
+        { "name": "GET /admin/payroll-period-settings", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/payroll-period-settings", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","payroll-period-settings"] } } },
+        { "name": "PUT /admin/payroll-period-settings", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/payroll-period-settings", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","payroll-period-settings"] } } },
+        { "name": "GET /admin/punch-selfies", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/admin/punch-selfies", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","admin","punch-selfies"] } } }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        { "name": "GET /tasks/stats", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/stats", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","stats"] } } },
+        { "name": "GET /tasks/kanban", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/kanban", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","kanban"] } } },
+        { "name": "PUT /tasks/bulk-status", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"ids\": [],\n  \"status\": \"in_progress\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/bulk-status", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","bulk-status"] } } },
+        { "name": "POST /tasks", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"title\": \"New task\",\n  \"description\": \"\",\n  \"assigneeIds\": []\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks"] } } },
+        { "name": "GET /tasks", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks"] } } },
+        { "name": "GET /tasks/:id", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","{{id}}"] } } },
+        { "name": "PUT /tasks/:id", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"status\": \"completed\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","{{id}}"] } } },
+        { "name": "DELETE /tasks/:id", "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","{{id}}"] } } },
+        { "name": "POST /tasks/:id/comments", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"text\": \"comment body\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/{{id}}/comments", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","{{id}}","comments"] } } },
+        { "name": "POST /tasks/:id/subtasks", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"title\": \"subtask\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/{{id}}/subtasks", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","{{id}}","subtasks"] } } },
+        { "name": "PUT /tasks/:id/subtasks/:subtaskIndex/toggle", "request": { "method": "PUT", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/{{id}}/subtasks/{{subtaskIndex}}/toggle", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","{{id}}","subtasks","{{subtaskIndex}}","toggle"] } } },
+        { "name": "POST /tasks/:id/time", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"minutes\": 30\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/{{id}}/time", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","{{id}}","time"] } } },
+        { "name": "POST /tasks/:id/attachments", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"key\": \"task/.../file.pdf\",\n  \"name\": \"file.pdf\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/tasks/{{id}}/attachments", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","tasks","{{id}}","attachments"] } } }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        { "name": "GET /chat", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat"] } } },
+        { "name": "POST /chat/direct", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"otherEmployeeId\": \"{{empId}}\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/direct", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","direct"] } } },
+        { "name": "POST /chat/groups", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"name\": \"Team\",\n  \"memberEmployeeIds\": []\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/groups", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","groups"] } } },
+        { "name": "GET /chat/online", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/online", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","online"] } } },
+        { "name": "GET /chat/search", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/search?q=hello", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","search"], "query":[{"key":"q","value":"hello"}] } } },
+        { "name": "GET /chat/starred", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/starred", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","starred"] } } },
+        { "name": "GET /chat/:conversationId/media", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/{{conversationId}}/media", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","{{conversationId}}","media"] } } },
+        { "name": "GET /chat/:conversationId/pinned", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/{{conversationId}}/pinned", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","{{conversationId}}","pinned"] } } },
+        { "name": "GET /chat/:conversationId/messages", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/{{conversationId}}/messages", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","{{conversationId}}","messages"] } } },
+        { "name": "POST /chat/:conversationId/messages", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"text\": \"hi\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/{{conversationId}}/messages", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","{{conversationId}}","messages"] } } },
+        { "name": "POST /chat/:conversationId/upload", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"key\": \"chat/.../file.png\",\n  \"name\": \"file.png\",\n  \"mimeType\": \"image/png\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/{{conversationId}}/upload", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","{{conversationId}}","upload"] } } },
+        { "name": "PUT /chat/groups/:conversationId", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"name\": \"Updated name\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/groups/{{conversationId}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","groups","{{conversationId}}"] } } },
+        { "name": "POST /chat/groups/:conversationId/members", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"employeeIds\": []\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/groups/{{conversationId}}/members", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","groups","{{conversationId}}","members"] } } },
+        { "name": "DELETE /chat/groups/:conversationId/members/:employeeId", "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/groups/{{conversationId}}/members/{{empId}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","groups","{{conversationId}}","members","{{empId}}"] } } },
+        { "name": "PUT /chat/messages/:messageId", "request": { "method": "PUT", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"text\": \"edited\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/messages/{{messageId}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","messages","{{messageId}}"] } } },
+        { "name": "DELETE /chat/messages/:messageId", "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/messages/{{messageId}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","messages","{{messageId}}"] } } },
+        { "name": "POST /chat/messages/:messageId/reactions", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"emoji\": \"thumbs_up\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/messages/{{messageId}}/reactions", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","messages","{{messageId}}","reactions"] } } },
+        { "name": "PUT /chat/messages/:messageId/pin", "request": { "method": "PUT", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/messages/{{messageId}}/pin", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","messages","{{messageId}}","pin"] } } },
+        { "name": "PUT /chat/messages/:messageId/star", "request": { "method": "PUT", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/chat/messages/{{messageId}}/star", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","chat","messages","{{messageId}}","star"] } } }
+      ]
+    },
+    {
+      "name": "Payroll",
+      "item": [
+        { "name": "GET /payroll/my", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/my", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","my"] } } },
+        { "name": "GET /payroll/ifsc/:code", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/ifsc/HDFC0001234", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","ifsc","HDFC0001234"] } } },
+        { "name": "GET /payroll/export-template", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/export-template", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","export-template"] } } },
+        { "name": "GET /payroll/export-bank-statement", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/export-bank-statement?month=2026-05", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","export-bank-statement"], "query":[{"key":"month","value":"2026-05"}] } } },
+        { "name": "GET /payroll/export-epfo", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/export-epfo?month=2026-05", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","export-epfo"], "query":[{"key":"month","value":"2026-05"}] } } },
+        { "name": "GET /payroll/export-working-days", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/export-working-days?month=2026-05", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","export-working-days"], "query":[{"key":"month","value":"2026-05"}] } } },
+        { "name": "GET /payroll/employee/:empId/config", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/employee/{{empId}}/config", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","employee","{{empId}}","config"] } } },
+        { "name": "GET /payroll/employee/:empId/revisions", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/employee/{{empId}}/revisions", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","employee","{{empId}}","revisions"] } } },
+        { "name": "PATCH /payroll/employee/:empId/config", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/employee/{{empId}}/config", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","employee","{{empId}}","config"] } } },
+        { "name": "POST /payroll/generate", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"month\": \"2026-05\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/generate", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","generate"] } } },
+        { "name": "POST /payroll/import-excel", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"key\": \"payroll-import/.../file.xlsx\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/import-excel", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","import-excel"] } } },
+        { "name": "POST /payroll/finalize-all", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"month\": \"2026-05\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/finalize-all", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","finalize-all"] } } },
+        { "name": "POST /payroll/bulk-finalize", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"ids\": []\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/bulk-finalize", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","bulk-finalize"] } } },
+        { "name": "POST /payroll/bulk-payment-date", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"ids\": [],\n  \"paymentDate\": \"2026-05-31\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/bulk-payment-date", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","bulk-payment-date"] } } },
+        { "name": "DELETE /payroll/bulk-delete", "request": { "method": "DELETE", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"ids\": []\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/bulk-delete", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","bulk-delete"] } } },
+        { "name": "GET /payroll", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll?month=2026-05", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll"], "query":[{"key":"month","value":"2026-05"}] } } },
+        { "name": "GET /payroll/:id/pdf", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/{{id}}/pdf", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","{{id}}","pdf"] } } },
+        { "name": "GET /payroll/:id/late-details", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/{{id}}/late-details", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","{{id}}","late-details"] } } },
+        { "name": "GET /payroll/:id", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","{{id}}"] } } },
+        { "name": "PATCH /payroll/:id", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","{{id}}"] } } },
+        { "name": "DELETE /payroll/:id", "request": { "method": "DELETE", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","{{id}}"] } } },
+        { "name": "POST /payroll/:id/finalize", "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/payroll/{{id}}/finalize", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","payroll","{{id}}","finalize"] } } }
+      ]
+    },
+    {
+      "name": "Leaves",
+      "item": [
+        { "name": "POST /leaves", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"leaveType\": \"CL\",\n  \"startDate\": \"2026-05-20\",\n  \"endDate\": \"2026-05-20\",\n  \"reason\": \"Personal\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves"] } } },
+        { "name": "GET /leaves/my", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/my", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","my"] } } },
+        { "name": "GET /leaves/balance", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/balance", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","balance"] } } },
+        { "name": "GET /leaves/balance/:empId", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/balance/{{empId}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","balance","{{empId}}"] } } },
+        { "name": "GET /leaves/summary", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/summary", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","summary"] } } },
+        { "name": "GET /leaves/pending", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/pending", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","pending"] } } },
+        { "name": "GET /leaves/all", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/all", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","all"] } } },
+        { "name": "PATCH /leaves/:id/approve", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"remarks\": \"approved\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/{{id}}/approve", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","{{id}}","approve"] } } },
+        { "name": "PATCH /leaves/:id/reject", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"remarks\": \"reason\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/{{id}}/reject", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","{{id}}","reject"] } } },
+        { "name": "PATCH /leaves/:id/withdraw", "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/{{id}}/withdraw", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","{{id}}","withdraw"] } } },
+        { "name": "PATCH /leaves/:id/cancel", "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/{{id}}/cancel", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","{{id}}","cancel"] } } },
+        { "name": "PATCH /leaves/:id/admin-cancel", "request": { "method": "PATCH", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"remarks\": \"reason\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/{{id}}/admin-cancel", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","{{id}}","admin-cancel"] } } },
+        { "name": "POST /leaves/:id/question", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"text\": \"please clarify\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/{{id}}/question", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","{{id}}","question"] } } },
+        { "name": "POST /leaves/:id/question/:qid/reply", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"text\": \"clarification text\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/{{id}}/question/{{qid}}/reply", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","{{id}}","question","{{qid}}","reply"] } } },
+        { "name": "POST /leaves/:id/attachment", "request": { "method": "POST", "body": {"mode":"formdata","formdata":[{"key":"file","type":"file","src":""}]}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/leaves/{{id}}/attachment", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","leaves","{{id}}","attachment"] } } }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        { "name": "GET /notifications", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/notifications", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","notifications"] } } },
+        { "name": "PATCH /notifications/read-all", "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/notifications/read-all", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","notifications","read-all"] } } },
+        { "name": "PATCH /notifications/:id/read", "request": { "method": "PATCH", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/notifications/{{id}}/read", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","notifications","{{id}}","read"] } } },
+        { "name": "DELETE /notifications/:id", "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/notifications/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","notifications","{{id}}"] } } }
+      ]
+    },
+    {
+      "name": "Announcements",
+      "item": [
+        { "name": "GET /announcements", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/announcements?limit=20", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","announcements"], "query":[{"key":"limit","value":"20"}] } } },
+        { "name": "POST /announcements", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"title\": \"Town hall\",\n  \"body\": \"Friday 4pm\",\n  \"priority\": \"normal\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/announcements", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","announcements"] } } },
+        { "name": "DELETE /announcements/:id", "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/announcements/{{id}}", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","announcements","{{id}}"] } } }
+      ]
+    },
+    {
+      "name": "Uploads",
+      "item": [
+        { "name": "POST /uploads/sign (PUT presign)", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"purpose\": \"selfie\",\n  \"contentType\": \"image/jpeg\",\n  \"filename\": \"selfie.jpg\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/uploads/sign", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","uploads","sign"] } } },
+        { "name": "POST /uploads/sign-get (GET presign)", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\n  \"key\": \"chat/.../file.png\"\n}"}, "url": { "raw": "{{baseUrl}}/api/{{apiVersion}}/uploads/sign-get", "host":["{{baseUrl}}"], "path":["api","{{apiVersion}}","uploads","sign-get"] } } }
+      ]
+    }
+  ]
+}
