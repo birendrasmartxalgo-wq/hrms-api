@@ -1,6 +1,7 @@
 import { collections } from '../../db/collections';
 import type { UserDocument } from '../../db/types/User';
-import type { Filter, FindOptions, InsertOneResult, UpdateResult, OptionalId } from 'mongodb';
+import type { Filter, InsertOneResult, UpdateResult, OptionalId } from 'mongodb';
+import type { FindOptions } from 'mongodb';
 
 export const UsersService = {
   async hashPassword(password: string): Promise<string> {
@@ -29,7 +30,7 @@ export const UsersService = {
 
   async findOne(
     filter: Filter<UserDocument>, 
-    options?: FindOptions<UserDocument>, 
+    options?: FindOptions, 
     includePassword = false
   ): Promise<UserDocument | null> {
     const projection = options?.projection || {};
@@ -41,7 +42,7 @@ export const UsersService = {
 
   async find(
     filter: Filter<UserDocument>, 
-    options?: FindOptions<UserDocument>, 
+    options?: FindOptions, 
     includePassword = false
   ): Promise<UserDocument[]> {
     const projection = options?.projection || {};

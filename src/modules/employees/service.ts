@@ -102,7 +102,7 @@ export const EmployeesService = {
       $unwind: { path: '$user', preserveNullAndEmptyArrays: true },
     });
 
-    const todayStart = utcMidnight(new Date());
+    const todayStart = utcMidnight();
     const todayEnd = new Date(todayStart);
     todayEnd.setUTCHours(23, 59, 59, 999);
 

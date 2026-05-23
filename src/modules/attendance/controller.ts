@@ -73,6 +73,7 @@ export const attendanceController = new Elysia({ prefix: '/attendance' })
       }
 
       const repunchReq = await collections.repunchRequests().insertOne({
+        _id: new ObjectId(),
         employee: employeeId,
         attendance: existing._id,
         date: today,
@@ -125,7 +126,7 @@ export const attendanceController = new Elysia({ prefix: '/attendance' })
       time: nowIST,
       location: { lat: body.lat, lng: body.lng, accuracy: body.accuracy || 0, ip: '' },
       selfieUrl: selfieKey,
-      selfiePublicId: null,
+      selfiePublicId: undefined,
       withinGeofence: geo.withinGeofence,
       distanceFromOffice: geo.distanceFromOffice
     };
@@ -137,7 +138,7 @@ export const attendanceController = new Elysia({ prefix: '/attendance' })
           punchIn: punchInData, 
           status: 'present', 
           isLate, 
-          source: body.source || 'web' 
+          source: (body.source || 'web') as import('../../db/types/Attendance').AttendanceSource
         },
         $setOnInsert: {
           employee: employeeId,
@@ -243,7 +244,7 @@ export const attendanceController = new Elysia({ prefix: '/attendance' })
             time: nowIST,
             location: { lat: body.lat, lng: body.lng, accuracy: body.accuracy || 0, ip: '' },
             selfieUrl: selfieKey,
-            selfiePublicId: null,
+            selfiePublicId: undefined,
             withinGeofence: geo.withinGeofence,
             distanceFromOffice: geo.distanceFromOffice
           },
@@ -310,7 +311,7 @@ export const attendanceController = new Elysia({ prefix: '/attendance' })
     }
 
     await collections.attendances().updateOne(
-      { _id: attendance._id },
+      { _id: attendance!._id },
       { $set: { breaks } }
     );
 
@@ -471,8 +472,8 @@ export const attendanceController = new Elysia({ prefix: '/attendance' })
     let updatedPunchIn = attendance.punchIn;
     let updatedPunchOut = attendance.punchOut;
 
-    if (body.punchInTime) updatedPunchIn = { ...attendance.punchIn, time: new Date(body.punchInTime) };
-    if (body.punchOutTime) updatedPunchOut = { ...attendance.punchOut, time: new Date(body.punchOutTime) };
+    if (body.punchInTime && attendance.punchIn) updatedPunchIn = { ...attendance.punchIn, time: new Date(body.punchInTime) };
+    if (body.punchOutTime && attendance.punchOut) updatedPunchOut = { ...attendance.punchOut, time: new Date(body.punchOutTime) };
 
     let totalWorkingMinutes = attendance.totalWorkingMinutes || 0;
     let totalBreakMinutes = attendance.totalBreakMinutes || 0;
