@@ -158,17 +158,17 @@ export const EmployeeSchemas = {
   },
   UploadDocument: {
     params: t.Object({
-      empId: t.String(),
+      id: t.String(),
     }),
   },
   DocumentsList: {
     params: t.Object({
-      empId: t.String(),
+      id: t.String(),
     }),
   },
   DocumentDetails: {
     params: t.Object({
-      empId: t.String(),
+      id: t.String(),
     }),
   },
   DeleteDocument: {

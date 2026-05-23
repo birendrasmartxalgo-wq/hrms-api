@@ -568,11 +568,20 @@ export const LeaveService = {
     const balance = computeLeaveBalance(emp.dateOfJoining, leaves, now);
     const totalTaken = +leaves.reduce((sum, leave) => sum + (leave.totalDays || 0), 0).toFixed(1);
 
+    const byType: Record<string, number> = {};
+    for (const t of ['CL', 'SL', 'EL', 'CO', 'LOP', 'ML', 'PL', 'BL'] as const) {
+      byType[t] = +leaves
+        .filter((l) => l.leaveType === t)
+        .reduce((sum, l) => sum + (l.totalDays || 0), 0)
+        .toFixed(1);
+    }
+
     return {
       balance,
       totalTaken,
       totalAccrued: +(balance + totalTaken).toFixed(1),
       monthly: monthlyBreakdown(leaves),
+      byType,
       year: now.getFullYear(),
     };
   },

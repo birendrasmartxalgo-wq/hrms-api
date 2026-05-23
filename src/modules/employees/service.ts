@@ -94,12 +94,42 @@ export const EmployeesService = {
         from: 'users',
         localField: 'user',
         foreignField: '_id',
+        pipeline: [{ $project: { password: 0, passwordResetOtpHash: 0, passwordResetTokenHash: 0 } }],
         as: 'user',
       },
     });
     pipeline.push({
       $unwind: { path: '$user', preserveNullAndEmptyArrays: true },
     });
+
+    const todayStart = utcMidnight(new Date());
+    const todayEnd = new Date(todayStart);
+    todayEnd.setUTCHours(23, 59, 59, 999);
+
+    pipeline.push({
+      $lookup: {
+        from: 'attendances',
+        let: { empId: '$_id' },
+        pipeline: [
+          { $match: { $expr: { $eq: ['$employee', '$$empId'] }, date: { $gte: todayStart, $lte: todayEnd } } },
+          { $project: { status: 1 } },
+          { $limit: 1 },
+        ],
+        as: '_todayAtt',
+      },
+    });
+    pipeline.push({
+      $addFields: {
+        attendanceStatus: {
+          $cond: {
+            if: { $gt: [{ $size: '$_todayAtt' }, 0] },
+            then: { $arrayElemAt: ['$_todayAtt.status', 0] },
+            else: 'absent',
+          },
+        },
+      },
+    });
+    pipeline.push({ $project: { _todayAtt: 0 } });
 
     pipeline.push({ $sort: { createdAt: -1 } });
 

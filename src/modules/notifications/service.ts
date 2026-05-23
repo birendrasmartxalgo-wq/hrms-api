@@ -24,7 +24,8 @@ async function requireEmployee(user: AuthUser | null | undefined) {
 export const NotificationService = {
   async list(user: AuthUser | null | undefined) {
     const employee = await requireEmployee(user);
-    return collections.notifications().find({ employee }).sort({ createdAt: -1 }).limit(50).toArray();
+    const docs = await collections.notifications().find({ employee }).sort({ createdAt: -1 }).limit(50).toArray();
+    return docs.map((d) => ({ ...d, message: d.body ?? d.title }));
   },
 
   async readAll(user: AuthUser | null | undefined) {

@@ -57,7 +57,7 @@ export const configController = new Elysia({ prefix: '/config' })
         return {
           _id: h._id.toString(),
           day: d.getDate(),
-          month: d.getMonth(),
+          month: d.getMonth() + 1,
           year: h.year,
           name: h.name,
           weekday: d.toLocaleDateString('en-IN', { weekday: 'long' }),
