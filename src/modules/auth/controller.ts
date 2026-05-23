@@ -5,22 +5,11 @@ import { collections } from '../../db/collections';
 import { UsersService } from '../users/service';
 import { authPlugin } from '../../plugins/auth';
 import { ObjectId } from 'mongodb';
-import { env } from '../../env';
-import jwt from 'jsonwebtoken';
-
-function signToken(userId: string, role: string, employeeId?: string) {
-  return jwt.sign({ id: userId, role, employeeId }, env.JWT_SECRET, { expiresIn: '24h' });
-}
-
-function signRefreshToken(userId: string, role: string, client: string) {
-  const expiresIn = client === 'mobile' ? '30d' : '7d';
-  return jwt.sign({ id: userId, role, client }, env.JWT_REFRESH_SECRET, { expiresIn });
-}
 
 export const authController = new Elysia({ prefix: '/auth' })
   .use(authPlugin)
 
-  .post('/register', async ({ body, set }) => {
+  .post('/register', async ({ body, set, accessJwt, refreshJwt }) => {
     const { email, password, name, role, empId, department, designation } = body;
 
     const existingUser = await collections.users().findOne({ email: email.toLowerCase() });
@@ -75,8 +64,17 @@ export const authController = new Elysia({ prefix: '/auth' })
       { $set: { employee: employeeResult.insertedId } }
     );
 
-    const token = signToken(userResult.insertedId.toString(), safeRole, employeeResult.insertedId.toString());
-    const refreshToken = signRefreshToken(userResult.insertedId.toString(), safeRole, 'web');
+    const token = await accessJwt.sign({
+      id: userResult.insertedId.toString(),
+      role: safeRole,
+      employeeId: employeeResult.insertedId.toString(),
+      exp: '24h',
+    });
+    const refreshToken = await refreshJwt.sign({
+      id: userResult.insertedId.toString(),
+      role: safeRole,
+      exp: '7d',
+    });
 
     set.status = 201;
     return {
@@ -93,7 +91,7 @@ export const authController = new Elysia({ prefix: '/auth' })
     };
   }, AuthSchemas.Register)
 
-  .post('/login', async ({ body, query, set }) => {
+  .post('/login', async ({ body, query, set, accessJwt, refreshJwt }) => {
     const { email, password } = body;
     const client = query.client === 'mobile' ? 'mobile' : 'web';
 
@@ -115,8 +113,17 @@ export const authController = new Elysia({ prefix: '/auth' })
       return { message: 'Invalid credentials' };
     }
 
-    const token = signToken(user._id.toString(), user.role, user.employee?.toString());
-    const refreshToken = signRefreshToken(user._id.toString(), user.role, client);
+    const token = await accessJwt.sign({
+      id: user._id.toString(),
+      role: user.role,
+      employeeId: user.employee?.toString(),
+      exp: '24h',
+    });
+    const refreshToken = await refreshJwt.sign({
+      id: user._id.toString(),
+      role: user.role,
+      exp: client === 'mobile' ? '30d' : '7d',
+    });
 
     return {
       token,
@@ -131,24 +138,34 @@ export const authController = new Elysia({ prefix: '/auth' })
     };
   }, AuthSchemas.Login)
 
-  .post('/refresh', async ({ body, set }) => {
+  .post('/refresh', async ({ body, set, accessJwt, refreshJwt }) => {
     const { refreshToken } = body;
 
-    try {
-      const decoded: any = jwt.verify(refreshToken, env.JWT_REFRESH_SECRET);
-      const user = await collections.users().findOne({ _id: new ObjectId(decoded.id) });
-      
-      if (!user || !user.isActive) {
-        set.status = 401;
-        return { message: 'Invalid refresh token' };
-      }
-
-      const token = signToken(user._id.toString(), user.role, user.employee?.toString());
-      return { token };
-    } catch (err) {
+    const decoded = await refreshJwt.verify(refreshToken);
+    if (!decoded) {
       set.status = 401;
       return { message: 'Invalid refresh token' };
     }
+
+    const decodedId = decoded.id ?? decoded.userId ?? decoded.sub;
+    if (!decodedId || !ObjectId.isValid(decodedId)) {
+      set.status = 401;
+      return { message: 'Invalid refresh token' };
+    }
+
+    const user = await collections.users().findOne({ _id: new ObjectId(decodedId) });
+    if (!user || !user.isActive) {
+      set.status = 401;
+      return { message: 'Invalid refresh token' };
+    }
+
+    const token = await accessJwt.sign({
+      id: user._id.toString(),
+      role: user.role,
+      employeeId: user.employee?.toString(),
+      exp: '24h',
+    });
+    return { token };
   }, AuthSchemas.Refresh)
 
   .post('/forgot-password', async ({ body, set }) => {
