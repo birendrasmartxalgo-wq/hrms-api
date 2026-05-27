@@ -11,6 +11,7 @@ import { profileController } from './modules/profile/controller';
 import { taskController } from './modules/tasks/controller';
 import { chatController } from './modules/chat/controller';
 import { payrollController } from './modules/payroll/controller';
+import { payrollAdminController } from './modules/payroll/adminController';
 import { leaveRoutes } from './modules/leaves/routes';
 import { notificationRoutes } from './modules/notifications/routes';
 import { uploadRoutes } from './modules/uploads/routes';
@@ -42,6 +43,7 @@ export const app = new Elysia({
   .use(taskController)
   .use(chatController)
   .use(payrollController)
+  .use(payrollAdminController)
   .use(uploadRoutes)
   .use(leaveRoutes)
   .use(notificationRoutes)
@@ -71,7 +73,7 @@ export const app = new Elysia({
   }));
 
 if (import.meta.main) {
-  app.listen(env.API_PORT, ({ hostname, port }) => {
+  app.listen({ port: env.API_PORT, hostname: env.HOST }, ({ hostname, port }) => {
     console.log(
       `[hrms-api] listening on http://${hostname}:${port}/api/${env.API_VERSION} (env=${env.NODE_ENV})`,
     );

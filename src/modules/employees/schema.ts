@@ -21,8 +21,9 @@ export const EmployeeListItem = t.Object(
         t.Object({ _id: t.Any(), name: t.String() }, { additionalProperties: true }),
       ]),
     ),
-    phone: t.Optional(t.String()),
-    avatar: t.Optional(t.String()),
+    phone: t.Optional(t.Union([t.String(), t.Null()])),
+    avatar: t.Optional(t.Union([t.String(), t.Null()])),
+    avatarUrl: t.Optional(t.Union([t.String(), t.Null()])),
     employmentStatus: t.Optional(t.String()),
     isActive: t.Optional(t.Boolean()),
     // Optional — server doesn't compute this today. Mobile defaults to 'unknown'

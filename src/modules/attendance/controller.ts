@@ -393,6 +393,84 @@ export const attendanceController = new Elysia({ prefix: '/attendance' })
     return { records, leaveDays, summary };
   })
 
+  // GET /attendance/monthly-all — admin+hr team view. Returns per-employee
+  // monthly summaries (one row per active employee). Shape mirrors
+  // /leaves/summary so the client can render a similar grid.
+  .get('/monthly-all', async ({ user, query, set }) => {
+    if (!user || (user.role !== 'admin' && user.role !== 'hr')) {
+      set.status = 403; return { message: 'Forbidden' };
+    }
+
+    const month = parseInt(query.month || (new Date().getMonth() + 1).toString());
+    const year = parseInt(query.year || new Date().getFullYear().toString());
+    const start = new Date(year, month - 1, 1);
+    const end = new Date(year, month, 0, 23, 59, 59);
+
+    const [employees, attendances, leaves, departments] = await Promise.all([
+      collections.employees()
+        .find({ isActive: { $ne: false } })
+        .project({ name: 1, empId: 1, designation: 1, department: 1, avatar: 1 })
+        .toArray(),
+      collections.attendances()
+        .find({ date: { $gte: start, $lte: end } })
+        .toArray(),
+      collections.leaveRequests()
+        .find({ status: 'approved', startDate: { $lte: end }, endDate: { $gte: start } })
+        .toArray(),
+      collections.departments().find().project({ name: 1 }).toArray(),
+    ]);
+
+    const deptMap = new Map(departments.map((d: any) => [d._id.toString(), d.name]));
+
+    const todayStr = new Date().toDateString();
+    const calcNetMins = (r: any) => {
+      if (r.netWorkingMinutes > 0) return r.netWorkingMinutes;
+      if (r.punchIn?.time && !r.punchOut?.time) {
+        const recDateStr = new Date(r.date).toDateString();
+        if (recDateStr !== todayStr) return 0;
+        const breakTotal = (r.breaks || [])
+          .filter((b: any) => b.endTime)
+          .reduce((s: number, b: any) => s + (b.durationMinutes || 0), 0);
+        return Math.max(0, Math.floor((Date.now() - new Date(r.punchIn.time).getTime()) / 60000) - breakTotal);
+      }
+      return 0;
+    };
+
+    const data = employees.map((emp: any) => {
+      const empAtt = attendances.filter((r: any) => r.employee.equals(emp._id));
+      const empLeaves = leaves.filter((l: any) => l.employee.equals(emp._id));
+
+      let onLeave = 0;
+      for (const lv of empLeaves) {
+        const lvStart = new Date(Math.max(new Date(lv.startDate).getTime(), start.getTime()));
+        const lvEnd = new Date(Math.min(new Date(lv.endDate).getTime(), end.getTime()));
+        for (let d = new Date(lvStart); d <= lvEnd; d.setDate(d.getDate() + 1)) onLeave++;
+      }
+
+      const totalNetMinutes = empAtt.reduce((sum: number, r: any) => sum + calcNetMins(r), 0);
+
+      return {
+        _id: emp._id,
+        name: emp.name,
+        empId: emp.empId,
+        designation: emp.designation,
+        department: emp.department ? deptMap.get(emp.department.toString()) : undefined,
+        avatar: emp.avatar || null,
+        summary: {
+          present: empAtt.filter((r: any) => r.status === 'present').length,
+          halfDay: empAtt.filter((r: any) => r.status === 'half_day').length,
+          absent: empAtt.filter((r: any) => r.status === 'absent').length,
+          late: empAtt.filter((r: any) => r.isLate).length,
+          onLeave,
+          totalNetMinutes,
+          totalNetHours: totalNetMinutes,
+        },
+      };
+    });
+
+    return { data, month, year };
+  })
+
   .get('/monthly/:empId', async ({ user, params, query, set }) => {
     if (!user) { set.status = 401; return { message: 'Unauthorized' }; }
     

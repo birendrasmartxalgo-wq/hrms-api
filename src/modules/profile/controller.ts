@@ -56,7 +56,8 @@ export const profileController = new Elysia({ prefix: '/profile' })
     }
     try {
       const formData = await request.formData();
-      const file = formData.get('file');
+      // RN FormData renames the part to `avatar`; web admin uses `file`.
+      const file = formData.get('file') ?? formData.get('avatar');
 
       if (!file) {
         set.status = 400;

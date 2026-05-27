@@ -7,6 +7,7 @@ const EnvSchema = z.object({
 
   // Phase 1 optional with defaults
   API_PORT: z.coerce.number().int().positive().default(6000),
+  HOST: z.string().default('localhost'),
   API_VERSION: z.string().default('v1'),
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   CORS_ORIGINS: z

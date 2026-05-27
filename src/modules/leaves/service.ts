@@ -576,7 +576,11 @@ export const LeaveService = {
         .toFixed(1);
     }
 
+    // Mobile iterates Object.entries(response) and matches leave-type codes
+    // (CL/SL/EL/…) at the top level, so spread byType. byType is kept for
+    // existing consumers (web admin).
     return {
+      ...byType,
       balance,
       totalTaken,
       totalAccrued: +(balance + totalTaken).toFixed(1),

@@ -127,6 +127,11 @@ export const EmployeesService = {
             else: 'absent',
           },
         },
+        // Mobile list rows render avatar + tap-to-call; guarantee these keys
+        // exist on every row (null when unset) and expose avatarUrl alias.
+        phone: { $ifNull: ['$phone', null] },
+        avatar: { $ifNull: ['$avatar', null] },
+        avatarUrl: { $ifNull: ['$avatar', null] },
       },
     });
     pipeline.push({ $project: { _todayAtt: 0 } });

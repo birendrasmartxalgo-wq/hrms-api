@@ -56,6 +56,12 @@ export const leaveRoutes = new Elysia({ prefix: '/leaves', name: 'leaves' })
     },
     { authorize: true, body: ApplyLeaveBody, detail: { tags: ['Leaves'] } },
   )
+  // GET /leaves — caller's own leaves. Alias for /my to match docs/07.
+  .get(
+    '/',
+    async ({ ...context }) => ({ data: await LeaveService.my((context as any).user) }),
+    { authorize: true, detail: { tags: ['Leaves'], summary: 'List the caller\'s own leaves' } },
+  )
   .get(
     '/my',
     async ({ ...context }) => ({ data: await LeaveService.my((context as any).user) }),
